@@ -5,31 +5,20 @@
 
 
 #include "vector"
+#include "Observer.h"
 
-class Observer
+
+void Observable::addObserver(Observer *observer)
 {
-    public:
-    virtual void update() = 0;
-};
+    _observers.push_back(observer);
+}
 
-class Observable
+void Observable::notifyUpdate()
 {
-    public:
-    void addObserver(Observer *observer)
+    int size = _observers.size();
+    for (int i=0;i<size;i++)
     {
-        _observers.push_back(observer);
-    }
-
-    void notifyUpdate()
-    {
-        int size = _observers.size();
-        for (int i=0;i<size;i++)
-        {
-            _observers[i]->update();
-        };
+        _observers[i]->update();
+    };
     
-    }
-
-    private:
-    std::vector<Observer*> _observers;
-};
+}
